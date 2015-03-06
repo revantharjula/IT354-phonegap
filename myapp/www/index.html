@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	<title>San Angelico Museum of Contemporary Art</title>
+	<link rel="stylesheet"  href="css/jquery.mobile.min.css">
+	<style>
+		#homeBanner {
+			width: 100%;
+		}
+		.center {
+			text-align: center;
+			margin-left: auto;
+			margin-right:auto;
+		}
+		.banner {
+			display:block;
+			width: 100%;
+		}
+		#qrcode {
+			display:block;	
+			margin-left: auto;
+			margin-right:auto;
+		}
+		#map2 {
+			margin-left: auto;
+			margin-right:auto;
+			width: 320px;
+			height: 320px;  
+		}
+	</style>
+	<link rel="stylesheet" href="css/leaflet.css" />
+	<script src="js/jquery.js"></script>
+	<script src="js/map.js"></script>
+	<script src="js/jquery.mobile.min.js"></script>
+	<script src="js/leaflet.js"></script>
+	<script src="js/app.js"></script>
+	<script src="phonegap.js"></script>
+	<script src="barcodescanner.js"></script>
+
+</head>
+	
+<body>
+    <script>
+        
+        var val;
+       // val = document.getElementById('number').value;
+         function validate_card() {
+             val = document.getElementById('number').value;
+// accept only digits, dashes or spaces
+    if (/[^0-9-\s]+/.test(val))
+    {
+         alert("Invalid card number",val);
+         return false;
+    }
+       
+   
+
+// The Luhn Algorithm. It's so pretty.
+    var nCheck = 0, nDigit = 0, bEven = false;
+    val = val.replace(/\D/g, "");
+
+    for (var n = val.length - 1; n >= 0; n--) {
+        var cDigit = val.charAt(n),
+            nDigit = parseInt(cDigit, 10);
+
+        if (bEven) {
+            if ((nDigit *= 2) > 9) nDigit -= 9;
+        }
+
+        nCheck += nDigit;
+        bEven = !bEven;
+    }
+
+    //return (nCheck % 10) == 0;
+    if((nCheck % 10) == 0)
+    {
+        alert("Valid Card");
+    }
+    else
+    {
+        alert("Invalid Card");
+    }
+}    
+    </script>
+<div id="homeScreen" data-role="page">
+   <center><img src="imgs/logo.png" height="100" width="100"> <h3> Welcome to my first phone gap app </h3> </center>
+	<div data-role="content">
+		<ul data-role="listview" data-inset="true" class="ui-nodisc-icon ui-alt-icon">
+			<li><a href="#currentExhibits" >Click here for credit card validation</a></li>
+
+		</ul>
+	</div>
+</div>
+<div id="currentExhibits" data-role="page">
+	<header data-role="header" data-position="fixed" data-id="appHeader">
+		<a href="#homeScreen" class="ui-btn ui-icon-carat-l ui-btn-icon-notext ui-btn-left ui-nodisc-icon ui-alt-icon">Back</a>
+	</header>
+	<div data-role="content">
+		<h3 class="center">Enter card number here</h3>
+                    <form method="POST" onSubmit = "validate_card()" data-ajax="false">
+		       <input name = "number" id="number" type="text" placeholder = "Card number" required>
+		       <input type = "submit" value = "Submit">
+		    </form>
+	</div>
+</div>
+
+</body>
+</html>
